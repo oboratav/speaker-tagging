@@ -39,7 +39,7 @@ And Docker will take care of the rest. To annotate a file, simply pipe it into t
 
 You can also use the `-v` flag to mount files from the local filesystem:
 
-    docker run -i -v /some/input/file.seg:/usr/data/input_file.seg -a stdout oboratav/speaker-tagging > output_file.txt
+    docker run -i -v /some/input/file.seg:/usr/data/input_file.seg -a stdout oboratav/speaker-tagging /usr/data/input_file.seg > output_file.txt
 
 ### Directly
 You can also skip Docker altogether and just clone this git repo, create a virtual environment, and install the requirements listed in `requirements.txt`
