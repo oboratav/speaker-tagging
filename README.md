@@ -1,5 +1,8 @@
 
 # Red Hen Teletext Color Annotator
+[A Red Hen Lab project.](https://www.redhenlab.org/home/the-cognitive-core-research-topics-in-red-hen/the-barnyard/convert-teletext-colors-to-speaker-tags)
+
+## Introduction
 Some providers in certain countries use styling features available in DVB Teletext to color-code their closed captioning. These color codes can potentially be used to detect turn-taking between interlocutors.
 
 This program takes a `.seg` file, reads color tags inside it (if any), and outputs an annotated version of the same file.
