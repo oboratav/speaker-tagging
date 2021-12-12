@@ -1,0 +1,11 @@
+FROM python:3.9-bullseye
+
+# Install the python app
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src/* .
+
+ENTRYPOINT ["python", "tag_speakers_from_cc_colors.py"]

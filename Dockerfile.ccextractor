@@ -1,0 +1,46 @@
+FROM ubuntu:20.04
+
+# Set timezone and frontend so that we aren't bothered during dependency installs
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Vancouver
+
+# Install base dependencies
+WORKDIR /usr/src/dependencies
+
+RUN apt update && apt install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common \
+    git
+
+# Install Python 3.9
+RUN apt-get install -y python3.9 python3.9-distutils python3.9-venv
+
+# Install pip for Python 3.9
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+RUN python3.9 get-pip.py
+
+# Install ccextractor dependencies
+RUN apt-get install -y libglew-dev libglfw3-dev cmake gcc libcurl4-gnutls-dev tesseract-ocr libtesseract-dev libleptonica-dev clang libclang-dev
+
+# Install Rust
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+
+# Add Rust to PATH
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Check Rust & Cargo
+RUN rustc --version && cargo --version
+
+# Clone ccextractor
+RUN git clone https://github.com/CCExtractor/ccextractor.git
+
+WORKDIR /usr/src/dependencies/ccextractor/linux
+
+# Build ccextractor, as per https://github.com/CCExtractor/ccextractor/blob/master/docs/COMPILATION.MD#using-the-build-script
+RUN ./build
+
+# Check ccextractor
+RUN ./ccextractor --version
